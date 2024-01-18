@@ -16,11 +16,19 @@ class CardSwiperScreen extends StatelessWidget {
         layout: SwiperLayout.STACK,
         itemCount: 10,
         itemWidth: size.width * 0.6,
-        itemHeight: size.height * 0.9,
+        itemHeight: size.height * 0.4,
         itemBuilder: (_, int index) {
-          return FadeInImage(
-              placeholder: AssetImage('https://via.placeholder.com/300x300'),
-              image: NetworkImage('https://via.placeholder.com/300x300'));
+          return GestureDetector(
+            onTap: () =>
+                Navigator.pushNamed(context, 'details', arguments: 'movie - '),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage('https://placekitten.com/200/300'),
+                  fit: BoxFit.cover),
+            ),
+          );
         },
       ),
     );
