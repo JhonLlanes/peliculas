@@ -12,13 +12,16 @@ class HomeScreen extends StatelessWidget {
           IconButton(icon: Icon(Icons.search), onPressed: () => {})
         ], // Puedes personalizar el texto según tu preferencia
       ),
-      body: const Column(children: [
-        // TODO cardSwipper
+      body: SingleChildScrollView(
+        child: Column(children: [
+          // TODO cardSwipper
 
-        CardSwiperScreen()
+          CardSwiperScreen(),
+          MovieSlider(),
 
-        // listado horizontal
-      ]),
+          // listado horizontal
+        ]),
+      ),
     );
   }
 }
