@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class DetailsScreen extends StatelessWidget {
           _CustomAppBar(),
           SliverList(
               delegate: SliverChildListDelegate(
-                  [_TitleAndDetalle(), _Overview(), _Overview(), _Overview()]))
+                  [_TitleAndDetalle(), _Overview(), CastingCards()]))
         ],
       ),
     );
