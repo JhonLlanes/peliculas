@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/models/models.dart';
 
 class MovieSlider extends StatelessWidget {
+  final List<Movie> movies;
+
+  const MovieSlider({super.key, required this.movies});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,8 +27,10 @@ class MovieSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 20,
-                itemBuilder: (_, int index) => _MoviePoster()),
+                itemCount: movies.length,
+                itemBuilder: (_, int index) => _MoviePoster(
+                      movie: movies[index],
+                    )),
           )
         ],
       ),
@@ -32,6 +39,10 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
+  final Movie movie;
+
+  const _MoviePoster({Key? key, required this.movie}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +58,7 @@ class _MoviePoster extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage('https://placekitten.com/200/300'),
+                  image: NetworkImage(movie.fullPosterImg),
                   fit: BoxFit.cover),
             ),
           ),
@@ -55,7 +66,7 @@ class _MoviePoster extends StatelessWidget {
             height: 3,
           ),
           Text(
-            'Starward',
+            movie.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

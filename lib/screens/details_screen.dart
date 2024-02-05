@@ -34,6 +34,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           alignment: Alignment.bottomCenter,
+          padding: EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: Text(
             'movie',
@@ -87,7 +88,7 @@ class _TitleAndDetalle extends StatelessWidget {
                   Icon(
                     Icons.star_outline,
                     size: 15,
-                    color: Colors.red,
+                    color: Colors.yellow[800],
                   ),
                   Text(
                     'movies.voteAverange',
