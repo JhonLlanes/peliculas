@@ -1,39 +1,37 @@
 import 'dart:convert';
 
-class Movie {
-  Movie({
+class MoviePopular {
+  MoviePopular({
     required this.adult,
     this.backdropPath,
     this.genreIds,
-    required this.id,
-    required this.originalLanguage,
-    required this.originalTitle,
-    required this.overview,
-    required this.popularity,
+    this.id,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
     this.posterPath,
     this.releaseDate,
-    required this.title,
-    required this.video,
-    required this.voteAverage,
-    required this.voteCount,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
   });
 
   bool adult;
   String? backdropPath;
-  List<int>? genreIds;
-  int id;
-  String originalLanguage;
-  String originalTitle;
-  String overview;
-  double popularity;
+  var genreIds;
+  int? id;
+  var originalLanguage;
+  String? originalTitle;
+  String? overview;
+  double? popularity;
   String? posterPath;
-  String? releaseDate;
-  String title;
-  bool video;
-  double voteAverage;
-  int voteCount;
-
-  String? heroId;
+  var releaseDate;
+  String? title;
+  bool? video;
+  double? voteAverage;
+  int? voteCount;
 
   get fullPosterImg {
     if (this.posterPath != null)
@@ -49,9 +47,10 @@ class Movie {
     return 'https://i.stack.imgur.com/GNhxO.png';
   }
 
-  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
+  factory MoviePopular.fromJson(String str) =>
+      MoviePopular.fromMap(json.decode(str));
 
-  factory Movie.fromMap(Map<String, dynamic> json) => Movie(
+  factory MoviePopular.fromMap(Map<String, dynamic> json) => MoviePopular(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
         genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
@@ -59,12 +58,12 @@ class Movie {
         originalLanguage: json["original_language"],
         originalTitle: json["original_title"],
         overview: json["overview"],
-        popularity: json["popularity"].toDouble(),
+        popularity: json["popularity"]?.toDouble(),
         posterPath: json["poster_path"],
         releaseDate: json["release_date"],
         title: json["title"],
         video: json["video"],
-        voteAverage: json["vote_average"].toDouble(),
+        voteAverage: json["vote_average"]?.toDouble(),
         voteCount: json["vote_count"],
       );
 }

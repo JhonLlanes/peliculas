@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/models/models.dart';
 
 class MovieSlider extends StatelessWidget {
-  final List<Movie> movies;
+  final List<MoviePopular> movies;
 
   const MovieSlider({super.key, required this.movies});
 
@@ -39,7 +39,7 @@ class MovieSlider extends StatelessWidget {
 }
 
 class _MoviePoster extends StatelessWidget {
-  final Movie movie;
+  final MoviePopular movie;
 
   const _MoviePoster({Key? key, required this.movie}) : super(key: key);
 
@@ -66,7 +66,7 @@ class _MoviePoster extends StatelessWidget {
             height: 3,
           ),
           Text(
-            movie.title,
+            movie.title ?? "n/a",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

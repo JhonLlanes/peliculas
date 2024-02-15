@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/models/models.dart';
+import 'package:peliculas/models/movie_popular.dart';
 
 class MoviesProvider extends ChangeNotifier {
   String _baseUrl = "api.themoviedb.org";
@@ -9,7 +10,7 @@ class MoviesProvider extends ChangeNotifier {
   String _languaje = "es-ES";
   Map<String, String> _headers = {};
   List<Movie> onDisplayMovies = [];
-  List<Movie> onDisplayPopularMovies = [];
+  List<MoviePopular> onDisplayPopularMovies = [];
 
   MoviesProvider() {
     print("Movies providers inicializado");
@@ -18,7 +19,7 @@ class MoviesProvider extends ChangeNotifier {
     };
 
     this.getOneDisplayMovies();
-    //this.getDisplayPopularMovies();
+    this.getDisplayPopularMovies();
   }
 
   getOneDisplayMovies() async {
@@ -40,12 +41,13 @@ class MoviesProvider extends ChangeNotifier {
 
   getDisplayPopularMovies() async {
     print("getDisplayPopularMovies");
-    var url = Uri.https(this._baseUrl, '3/person/popular',
-        {'language': _languaje, 'page': '1'});
+    var url = Uri.https(
+        this._baseUrl, '3/movie/popular', {'language': _languaje, 'page': '1'});
     final responsePopular = await http.get(url, headers: _headers);
     if (responsePopular.statusCode == 200) {
       final nowPopularResponse = PopularResponse.fromJson(responsePopular.body);
-      //print(nowPopularResponse.results[0].title);
+
+      print(nowPopularResponse.results[0].title);
       onDisplayPopularMovies = [...nowPopularResponse.results];
       notifyListeners();
     } else {
