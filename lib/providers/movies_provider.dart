@@ -11,6 +11,7 @@ class MoviesProvider extends ChangeNotifier {
   Map<String, String> _headers = {};
   List<Movie> onDisplayMovies = [];
   List<MoviePopular> onDisplayPopularMovies = [];
+  int _popularPage = 0;
 
   MoviesProvider() {
     print("Movies providers inicializado");
@@ -23,35 +24,30 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getOneDisplayMovies() async {
-    print("getOndisplayMovies");
-    var url = Uri.https(this._baseUrl, '3/movie/now_playing',
-        {'language': _languaje, 'page': '1'}); //Paginación con The Movie DB API
-
-    // Await the http get response, then decode the json-formatted response.
-    final response = await http.get(url, headers: _headers);
-    if (response.statusCode == 200) {
-      final nowPlayingResponse = NowPlayingResponse.fromJson(response.body);
-      print(nowPlayingResponse.results[0].title);
-      onDisplayMovies = nowPlayingResponse.results;
-      notifyListeners();
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
+    final getRespuestaData = await _getJsonData('3/movie/now_playing');
+    final nowPlayingResponse = NowPlayingResponse.fromJson(getRespuestaData);
+    onDisplayMovies = nowPlayingResponse.results;
+    notifyListeners();
   }
 
   getDisplayPopularMovies() async {
-    print("getDisplayPopularMovies");
-    var url = Uri.https(
-        this._baseUrl, '3/movie/popular', {'language': _languaje, 'page': '1'});
-    final responsePopular = await http.get(url, headers: _headers);
-    if (responsePopular.statusCode == 200) {
-      final nowPopularResponse = PopularResponse.fromJson(responsePopular.body);
+    _popularPage++;
+    final getRespuestaData =
+        await _getJsonData('3/movie/popular', _popularPage);
+    final nowPopularResponse = PopularResponse.fromJson(getRespuestaData);
+    onDisplayPopularMovies = [
+      ...onDisplayPopularMovies,
+      ...nowPopularResponse.results
+    ];
+    notifyListeners();
+  }
 
-      print(nowPopularResponse.results[0].title);
-      onDisplayPopularMovies = [...nowPopularResponse.results];
-      notifyListeners();
-    } else {
-      print('Request failed with status: ${responsePopular.statusCode}.');
-    }
+  Future<String> _getJsonData(String endpoint, [int page = 1]) async {
+    final url =
+        Uri.https(_baseUrl, endpoint, {'language': _languaje, 'page': '$page'});
+
+    // Await the http get response, then decode the json-formatted response.
+    final response = await http.get(url, headers: _headers);
+    return response.body;
   }
 }

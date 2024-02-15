@@ -3,8 +3,9 @@ import 'package:peliculas/models/models.dart';
 
 class MovieSlider extends StatelessWidget {
   final List<MoviePopular> movies;
+  final String? titulo;
 
-  const MovieSlider({super.key, required this.movies});
+  const MovieSlider({super.key, required this.movies, this.titulo});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MovieSlider extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Populares',
+              this.titulo ?? 'Populares',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
