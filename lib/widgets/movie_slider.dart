@@ -59,11 +59,13 @@ class _MoviePoster extends StatelessWidget {
               child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
                   image: NetworkImage(movie.fullPosterImg),
+                  width: 130,
+                  height: 190,
                   fit: BoxFit.cover),
             ),
           ),
           SizedBox(
-            height: 3,
+            height: 5,
           ),
           Text(
             movie.title ?? "n/a",
