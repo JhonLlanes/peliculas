@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/providers/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 class CastingCards extends StatelessWidget {
+  final int movieId;
+
+  const CastingCards({required this.movieId});
+
   @override
   Widget build(BuildContext context) {
+    final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+
     return Container(
         margin: EdgeInsets.only(bottom: 30),
         width: double.infinity,

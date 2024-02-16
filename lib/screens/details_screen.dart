@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/models/models.dart';
 import 'package:peliculas/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final String movie =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-moview';
+    final Movie movie = ModalRoute.of(context)?.settings.arguments as Movie;
+    print(movie.title);
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(movie: movie),
           SliverList(
-              delegate: SliverChildListDelegate(
-                  [_TitleAndDetalle(), _Overview(), CastingCards()]))
+              delegate: SliverChildListDelegate([
+            _TitleAndDetalle(movie: movie),
+            _Overview(movie: movie),
+            CastingCards(
+              movieId: movie.id,
+            )
+          ]))
         ],
       ),
     );
@@ -21,6 +27,10 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
+  final Movie movie;
+
+  const _CustomAppBar({super.key, required this.movie});
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -37,13 +47,13 @@ class _CustomAppBar extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: Text(
-            'movie',
+            movie.originalTitle!,
             style: TextStyle(fontSize: 16),
           ),
         ),
         background: FadeInImage(
             placeholder: AssetImage('assets/no-image.jpg'),
-            image: NetworkImage('https://placekitten.com/200/300'),
+            image: NetworkImage(movie.fullPosterImg),
             fit: BoxFit.cover),
       ),
     );
@@ -51,6 +61,10 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _TitleAndDetalle extends StatelessWidget {
+  final Movie movie;
+
+  const _TitleAndDetalle({super.key, required this.movie});
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTime = Theme.of(context).textTheme;
@@ -64,20 +78,23 @@ class _TitleAndDetalle extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://placekitten.com/200/300'),
+                image: NetworkImage(movie.fullPosterImg),
                 height: 150,
               )),
           SizedBox(width: 20),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Movie Title",
+                movie.title!,
                 style: textTime.headline5,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                "Movie descripcion",
+                movie.originalTitle!,
                 style: textTime.subtitle1,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
@@ -91,7 +108,7 @@ class _TitleAndDetalle extends StatelessWidget {
                     color: Colors.yellow[800],
                   ),
                   Text(
-                    'movies.voteAverange',
+                    '${movie.voteAverage!}',
                     style: textTime.caption,
                   )
                 ],
@@ -105,12 +122,16 @@ class _TitleAndDetalle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
+  final Movie movie;
+
+  const _Overview({required this.movie});
+
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Text(
-          'Sunt qui tempor sint aute cupidatat voluptate amet esse fugiat duis labore. Incididunt et nostrud enim aute. Cupidatat deserunt mollit enim do laboris aute. Fugiat mollit exercitation fugiat ut do fugiat minim aute esse. Officia nulla magna magna in. Officia minim cillum sint ad ut enim amet consequat eu aute. Nisi commodo aliquip dolor eu et excepteur exercitation nostrud incididunt laboris pariatur ipsum magna incididunt.',
+          movie.overview!,
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.subtitle1,
         ));

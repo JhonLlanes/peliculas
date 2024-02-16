@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/models/models.dart';
-import 'package:peliculas/models/movie_popular.dart';
 
 class MoviesProvider extends ChangeNotifier {
   String _baseUrl = "api.themoviedb.org";
@@ -10,7 +9,7 @@ class MoviesProvider extends ChangeNotifier {
   String _languaje = "es-ES";
   Map<String, String> _headers = {};
   List<Movie> onDisplayMovies = [];
-  List<MoviePopular> onDisplayPopularMovies = [];
+  List<Movie> onDisplayPopularMovies = [];
   int _popularPage = 0;
 
   MoviesProvider() {
