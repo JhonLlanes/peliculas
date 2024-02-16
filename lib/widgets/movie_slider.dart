@@ -101,7 +101,7 @@ class _MoviePoster extends StatelessWidget {
             height: 5,
           ),
           Text(
-            movie.title ?? "n/a",
+            movie.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,

@@ -47,7 +47,7 @@ class _CustomAppBar extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 10),
           color: Colors.black12,
           child: Text(
-            movie.originalTitle!,
+            movie.originalTitle,
             style: TextStyle(fontSize: 16),
           ),
         ),
@@ -68,6 +68,7 @@ class _TitleAndDetalle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTime = Theme.of(context).textTheme;
+    final size = MediaQuery.of(context).size;
 
     return Container(
       margin: EdgeInsets.only(top: 20),
@@ -82,39 +83,41 @@ class _TitleAndDetalle extends StatelessWidget {
                 height: 150,
               )),
           SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                movie.title!,
-                style: textTime.headline5,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                movie.originalTitle!,
-                style: textTime.subtitle1,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Row(
+          ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: size.width - 190),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(
-                    Icons.star_outline,
-                    size: 15,
-                    color: Colors.yellow[800],
+                  Text(
+                    movie.title,
+                    style: textTime.headline5,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    '${movie.voteAverage!}',
-                    style: textTime.caption,
+                    movie.originalTitle,
+                    style: textTime.subtitle1,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.star_outline,
+                        size: 15,
+                        color: Colors.yellow[800],
+                      ),
+                      Text(
+                        '${movie.voteAverage}',
+                        style: textTime.caption,
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          )
+              ))
         ],
       ),
     );
@@ -131,7 +134,7 @@ class _Overview extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Text(
-          movie.overview!,
+          movie.overview,
           textAlign: TextAlign.justify,
           style: Theme.of(context).textTheme.subtitle1,
         ));
