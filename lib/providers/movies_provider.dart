@@ -61,4 +61,14 @@ class MoviesProvider extends ChangeNotifier {
 
     return creditsResponse.cast;
   }
+
+  Future<List<Movie>> searchMovies(String query) async {
+    final url = Uri.https(
+        _baseUrl, '3/search/movie', {'language': _languaje, 'query': query});
+
+    final response = await http.get(url, headers: _headers);
+    final searchResponse = SearchResponse.fromJson(response.body);
+
+    return searchResponse.results;
+  }
 }
